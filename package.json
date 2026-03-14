@@ -1,0 +1,13 @@
+{
+  "name": "filmclusive-lora-training",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.23.0",
+  "scripts": {
+    "dev": "pnpm -C app tauri dev",
+    "build": "pnpm -C app tauri build",
+    "build:dmg": "./scripts/build_dmg_with_runtime.sh",
+    "build:dmg:env": "./scripts/build_dmg_with_runtime.sh \"$FILMCLUSIVE_PYTHON_RUNTIME\"",
+    "build:exe": "node ./scripts/build_exe.js"
+  }
+}

@@ -1,0 +1,22 @@
+[data-theme="light"] {
+  --fc-bg: #fafafa;
+  --fc-header: rgba(250, 250, 250, 0.9);
+  --fc-sidebar: rgba(250, 250, 250, 0.95);
+  --fc-panel: rgba(255, 255, 255, 0.85);
+  --fc-surface: rgba(255, 255, 255, 1);
+  --fc-surface-hover: rgba(244, 244, 245, 1);
+
+  --fc-border: rgba(228, 228, 231, 0.9);
+  --fc-border-strong: rgba(161, 161, 170, 0.85);
+
+  --fc-text: #0a0a0b;
+  --fc-text-muted: rgba(39, 39, 42, 0.7);
+  --fc-text-faint: rgba(63, 63, 70, 0.55);
+
+  --fc-accent: #0a0a0b;
+  --fc-accent-text: #ffffff;
+
+  --fc-nav-active-bg: var(--fc-accent);
+  --fc-nav-active-border: var(--fc-accent);
+  --fc-nav-active-text: var(--fc-accent-text);
+}

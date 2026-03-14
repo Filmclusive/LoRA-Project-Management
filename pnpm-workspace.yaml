@@ -1,0 +1,6 @@
+packages:
+  - app
+  - orchestrator
+
+onlyBuiltDependencies:
+  - esbuild
