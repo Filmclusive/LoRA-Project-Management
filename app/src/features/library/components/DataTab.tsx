@@ -3,6 +3,7 @@ import { ImageGallery } from "../../characters/components/ImageGallery";
 
 interface DataTabProps {
   handleImportImages: (mode: "copy" | "link") => void;
+  handleImportFolder: (mode: "copy" | "link") => void;
   handleGenerateDescriptions: () => void;
   assetPaths: AssetPaths | null;
   safeOpenPath: (path: string, label: string) => void;
@@ -16,6 +17,7 @@ interface DataTabProps {
 
 export function DataTab({
   handleImportImages,
+  handleImportFolder,
   handleGenerateDescriptions,
   assetPaths,
   safeOpenPath,
@@ -49,10 +51,30 @@ export function DataTab({
               className="mt-1 w-full rounded-xl px-3 py-2 text-left text-sm font-semibold text-[var(--fc-text)] hover:bg-[var(--fc-surface-hover)]"
               onClick={(event) => {
                 (event.currentTarget.closest("details") as HTMLDetailsElement | null)?.removeAttribute("open");
+                void handleImportFolder("copy");
+              }}
+            >
+              Copy folder into dataset
+            </button>
+            <button
+              type="button"
+              className="mt-1 w-full rounded-xl px-3 py-2 text-left text-sm font-semibold text-[var(--fc-text)] hover:bg-[var(--fc-surface-hover)]"
+              onClick={(event) => {
+                (event.currentTarget.closest("details") as HTMLDetailsElement | null)?.removeAttribute("open");
                 void handleImportImages("link");
               }}
             >
               Link originals
+            </button>
+            <button
+              type="button"
+              className="mt-1 w-full rounded-xl px-3 py-2 text-left text-sm font-semibold text-[var(--fc-text)] hover:bg-[var(--fc-surface-hover)]"
+              onClick={(event) => {
+                (event.currentTarget.closest("details") as HTMLDetailsElement | null)?.removeAttribute("open");
+                void handleImportFolder("link");
+              }}
+            >
+              Link folder
             </button>
           </div>
         </details>

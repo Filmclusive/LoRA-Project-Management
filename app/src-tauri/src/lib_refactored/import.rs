@@ -10,6 +10,41 @@ use crate::lib_refactored::characters::*;
 use crate::lib_refactored::captions::*;
 use crate::lib_refactored::models::*;
 
+fn collect_supported_images(path: &Path, out: &mut Vec<PathBuf>) {
+    if path.is_file() {
+        let ext = path
+            .extension()
+            .and_then(|e| e.to_str())
+            .unwrap_or("")
+            .to_lowercase();
+        if is_supported_image_ext(ext.as_str()) {
+            out.push(path.to_path_buf());
+        }
+        return;
+    }
+    if !path.is_dir() {
+        return;
+    }
+    let Ok(rd) = fs::read_dir(path) else {
+        return;
+    };
+    for entry in rd.flatten() {
+        let p = entry.path();
+        if p.is_dir() {
+            collect_supported_images(&p, out);
+        } else if p.is_file() {
+            let ext = p
+                .extension()
+                .and_then(|e| e.to_str())
+                .unwrap_or("")
+                .to_lowercase();
+            if is_supported_image_ext(ext.as_str()) {
+                out.push(p);
+            }
+        }
+    }
+}
+
 pub fn try_link_file(src: &Path, dest: &Path) -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
@@ -73,7 +108,29 @@ pub fn import_images_with_mode(
     let mut failures = Vec::new();
     let is_link = mode.eq_ignore_ascii_case("link");
 
+    let mut candidates: Vec<String> = Vec::new();
     for p in paths {
+        let src = PathBuf::from(&p);
+        if src.is_dir() {
+            let mut collected: Vec<PathBuf> = Vec::new();
+            collect_supported_images(&src, &mut collected);
+            if collected.is_empty() {
+                failed += 1;
+                failures.push(ImportFailure {
+                    source_path: p,
+                    reason: "No supported images found in folder.".to_string(),
+                });
+                continue;
+            }
+            for file in collected {
+                candidates.push(file.to_string_lossy().to_string());
+            }
+            continue;
+        }
+        candidates.push(p);
+    }
+
+    for p in candidates {
         let src = PathBuf::from(&p);
         if !src.is_file() {
             failed += 1;
@@ -248,7 +305,29 @@ pub fn import_asset_images_with_mode(
     let mut failures = Vec::new();
     let is_link = mode.eq_ignore_ascii_case("link");
 
+    let mut candidates: Vec<String> = Vec::new();
     for p in paths {
+        let src = PathBuf::from(&p);
+        if src.is_dir() {
+            let mut collected: Vec<PathBuf> = Vec::new();
+            collect_supported_images(&src, &mut collected);
+            if collected.is_empty() {
+                failed += 1;
+                failures.push(ImportFailure {
+                    source_path: p,
+                    reason: "No supported images found in folder.".to_string(),
+                });
+                continue;
+            }
+            for file in collected {
+                candidates.push(file.to_string_lossy().to_string());
+            }
+            continue;
+        }
+        candidates.push(p);
+    }
+
+    for p in candidates {
         let src = PathBuf::from(&p);
         if !src.is_file() {
             failed += 1;

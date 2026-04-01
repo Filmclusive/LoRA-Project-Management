@@ -99,6 +99,7 @@ export function LibraryPage() {
           workspaceTab={lib.workspaceTab}
           setWorkspaceTab={lib.setWorkspaceTab}
           handleImportImages={lib.handleImportImages}
+          handleImportFolder={lib.handleImportFolder}
           handleGenerateDescriptions={lib.handleGenerateDescriptions}
           assetPaths={lib.assetPaths}
           safeOpenPath={lib.safeOpenPath}

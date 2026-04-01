@@ -20,6 +20,7 @@ interface AssetWorkspaceProps {
   setWorkspaceTab: (tab: WorkspaceTab) => void;
   // Tab Props
   handleImportImages: (mode: "copy" | "link") => void;
+  handleImportFolder: (mode: "copy" | "link") => void;
   handleGenerateDescriptions: () => void;
   assetPaths: AssetPaths | null;
   safeOpenPath: (path: string, label: string) => void;
@@ -52,6 +53,7 @@ export function AssetWorkspace({
   workspaceTab,
   setWorkspaceTab,
   handleImportImages,
+  handleImportFolder,
   handleGenerateDescriptions,
   assetPaths,
   safeOpenPath,
@@ -143,6 +145,7 @@ export function AssetWorkspace({
           {workspaceTab === "data" && (
             <DataTab
               handleImportImages={handleImportImages}
+              handleImportFolder={handleImportFolder}
               handleGenerateDescriptions={handleGenerateDescriptions}
               assetPaths={assetPaths}
               safeOpenPath={safeOpenPath}

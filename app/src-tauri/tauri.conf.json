@@ -23,7 +23,7 @@
       "csp": null,
       "assetProtocol": {
         "enable": true,
-        "scope": ["$APPDATA/**", "$DOCUMENT/Filmclusive LoRAs/**"]
+        "scope": ["$APPDATA/**", "$DOCUMENT/Filmclusive LoRAs/**", "$DOCUMENT/Filmclusive/**"]
       }
     }
   },

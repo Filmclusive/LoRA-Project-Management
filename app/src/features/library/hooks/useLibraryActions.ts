@@ -96,6 +96,32 @@ export function useLibraryActions(
     }
   }
 
+  async function handleImportFolder(mode: "copy" | "link") {
+    if (!selectedProjectId || !selectedAsset) return;
+    const selection = await openDialog({
+      directory: true,
+      multiple: true,
+      title: mode === "link" ? "Link folder" : "Import folder",
+    });
+    if (!selection) return;
+    const sourcePaths = Array.isArray(selection) ? selection : [selection];
+    setRunningAction(mode === "link" ? "Linking originals…" : "Importing images…");
+    try {
+      await importAssetImagesWithMode({
+        projectId: selectedProjectId,
+        assetId: selectedAsset.id,
+        sourcePaths,
+        mode,
+      });
+      await refreshSelectedAsset();
+      await reloadLibrary();
+    } catch (error) {
+      setStatus({ kind: "error", message: String(error) });
+    } finally {
+      setRunningAction("");
+    }
+  }
+
   async function handleImportLora() {
     if (!selectedProjectId || !selectedAsset || !pendingImportPath) return;
     setRunningAction("Importing LoRA…");
@@ -286,6 +312,7 @@ export function useLibraryActions(
   return {
     handleCreateAsset,
     handleImportImages,
+    handleImportFolder,
     handleImportLora,
     handleSaveMetadata,
     handleGenerateDescriptions,
