@@ -1,9 +1,8 @@
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::fs;
 use uuid::Uuid;
 use crate::lib_refactored::types::*;
 use crate::lib_refactored::paths::*;
-use crate::lib_refactored::utils::*;
 
 pub fn load_library(root: &Path) -> Result<Library, String> {
     let path = library_path(root);

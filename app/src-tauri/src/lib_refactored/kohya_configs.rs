@@ -1,12 +1,7 @@
-use std::path::{Path, PathBuf};
-use std::fs;
+use std::path::Path;
+use crate::filmclusive_error;
 use crate::lib_refactored::types::*;
-use crate::lib_refactored::paths::*;
-use crate::lib_refactored::utils::*;
-use crate::lib_refactored::settings::*;
-use crate::lib_refactored::library_management::*;
-use crate::lib_refactored::models::*;
-use crate::lib_refactored::engine_management::*;
+use crate::lib_refactored::utils::{read_json_file, write_json_file};
 
 pub fn looks_like_flux_checkpoint(path: &str) -> bool {
     let value = path.trim().to_ascii_lowercase();
@@ -189,7 +184,7 @@ pub fn inject_flux_defaults(
     }
 }
 
-pub fn ensure_adapter_config_snapshot(run_dir: &Path, settings: &AppSettings) -> Result<(), String> {
+pub fn ensure_adapter_config_snapshot(run_dir: &Path, _settings: &AppSettings) -> Result<(), String> {
     let snapshot_path = run_dir.join("config_snapshot.json");
     let mut snapshot = read_json_file(&snapshot_path).ok_or_else(|| {
         filmclusive_error(
@@ -200,7 +195,7 @@ pub fn ensure_adapter_config_snapshot(run_dir: &Path, settings: &AppSettings) ->
         )
     })?;
 
-    let Some(training) = snapshot
+    let Some(_training) = snapshot
         .get_mut("training")
         .and_then(|value| value.as_object_mut())
     else {
@@ -212,7 +207,7 @@ pub fn ensure_adapter_config_snapshot(run_dir: &Path, settings: &AppSettings) ->
         ));
     };
 
-    let mut updated = false;
+    let updated = false;
     // ... (rest of the logic)
     if updated {
         write_json_file(&snapshot_path, &snapshot)?;

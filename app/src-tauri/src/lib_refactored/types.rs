@@ -1,8 +1,6 @@
 use serde::{Deserialize, Serialize};
-use uuid::Uuid;
 use std::sync::{Arc, Mutex, atomic::AtomicBool};
 use std::process::{Child, Command, Stdio};
-use std::path::PathBuf;
 use std::collections::HashMap;
 
 #[cfg(target_os = "windows")]
@@ -49,7 +47,11 @@ impl SleepGuard {
 impl Drop for SleepGuard {
     fn drop(&mut self) {
         #[cfg(any(target_os = "macos", target_os = "linux"))]
-        if let SleepGuard::Process(child) = self { let _ = child.kill(); let _ = child.wait(); }
+        {
+            let SleepGuard::Process(child) = self;
+            let _ = child.kill();
+            let _ = child.wait();
+        }
     }
 }
 

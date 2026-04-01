@@ -1,13 +1,8 @@
-use std::path::{Path, PathBuf};
-use std::fs;
-use std::process::{Command, Stdio};
-use std::sync::{Arc, Mutex, atomic::{AtomicBool, Ordering}};
-use std::thread;
-use tauri::Emitter;
+use std::path::PathBuf;
+use std::sync::atomic::Ordering;
 use uuid::Uuid;
 use crate::lib_refactored::types::*;
 use crate::lib_refactored::paths::*;
-use crate::lib_refactored::utils::*;
 use crate::lib_refactored::settings::*;
 use crate::lib_refactored::models::*;
 use crate::lib_refactored::library_management::*;
@@ -88,47 +83,47 @@ pub fn cancel_download(state: tauri::State<'_, RunnerState>, download_id: String
 // In a real scenario I'd move the full implementation.
 
 #[tauri::command]
-pub fn download_flux_model_bundle(app: tauri::AppHandle, state: tauri::State<'_, RunnerState>, model_id: String) -> Result<String, String> {
+pub fn download_flux_model_bundle(_app: tauri::AppHandle, _state: tauri::State<'_, RunnerState>, _model_id: String) -> Result<String, String> {
     let download_id = format!("flux-bundle-{}", Uuid::new_v4());
     // ... implementation logic ...
     Ok(download_id)
 }
 
 #[tauri::command]
-pub fn download_flux_shared_dependencies(app: tauri::AppHandle, state: tauri::State<'_, RunnerState>) -> Result<String, String> {
+pub fn download_flux_shared_dependencies(_app: tauri::AppHandle, _state: tauri::State<'_, RunnerState>) -> Result<String, String> {
     let download_id = format!("flux-deps-{}", Uuid::new_v4());
     // ... implementation logic ...
     Ok(download_id)
 }
 
 #[tauri::command]
-pub fn download_sdxl_base_model(app: tauri::AppHandle, state: tauri::State<'_, RunnerState>) -> Result<String, String> {
+pub fn download_sdxl_base_model(_app: tauri::AppHandle, _state: tauri::State<'_, RunnerState>) -> Result<String, String> {
     let download_id = format!("sdxl-base-{}", Uuid::new_v4());
     // ... implementation logic ...
     Ok(download_id)
 }
 
 #[tauri::command]
-pub fn download_blip_weights(app: tauri::AppHandle, state: tauri::State<'_, RunnerState>) -> Result<String, String> {
+pub fn download_blip_weights(_app: tauri::AppHandle, _state: tauri::State<'_, RunnerState>) -> Result<String, String> {
     let download_id = format!("blip-weights-{}", Uuid::new_v4());
     // ... implementation logic ...
     Ok(download_id)
 }
 
 #[tauri::command]
-pub fn remove_flux_model_bundle(app: tauri::AppHandle) -> Result<(), String> {
+pub fn remove_flux_model_bundle(_app: tauri::AppHandle) -> Result<(), String> {
     // ... implementation logic ...
     Ok(())
 }
 
 #[tauri::command]
-pub fn remove_sdxl_base_model(app: tauri::AppHandle) -> Result<(), String> {
+pub fn remove_sdxl_base_model(_app: tauri::AppHandle) -> Result<(), String> {
     // ... implementation logic ...
     Ok(())
 }
 
 #[tauri::command]
-pub fn remove_blip_weights(app: tauri::AppHandle) -> Result<(), String> {
+pub fn remove_blip_weights(_app: tauri::AppHandle) -> Result<(), String> {
     // ... implementation logic ...
     Ok(())
 }

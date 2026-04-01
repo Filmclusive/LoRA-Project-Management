@@ -1,10 +1,3 @@
-use dirs_next::document_dir;
-use serde::{Deserialize, Serialize};
-use sha2::{Digest, Sha256};
-use tauri::Emitter;
-use tauri::Manager;
-use uuid::Uuid;
-
 mod bootstrap;
 mod caption;
 mod config;
@@ -138,18 +131,9 @@ pub use engine_report::*;
 pub use engine_setup::*;
 
 use std::{
-    collections::{HashMap, VecDeque},
     fs,
-    io::Read,
-    io::{BufRead, BufReader, Write},
     path::{Path, PathBuf},
-    process::{Child, Command, Output, Stdio},
-    sync::{
-        atomic::{AtomicBool, Ordering},
-        Arc, Mutex,
-    },
-    thread,
-    time::{Duration, SystemTime, UNIX_EPOCH},
+    process::Command,
 };
 use system::write_accelerate_config_file;
 

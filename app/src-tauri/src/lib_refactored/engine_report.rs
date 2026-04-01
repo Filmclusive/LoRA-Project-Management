@@ -1,11 +1,10 @@
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use crate::lib_refactored::types::*;
 use crate::lib_refactored::paths::*;
 use crate::lib_refactored::utils::*;
 use crate::lib_refactored::engine_management::*;
 use crate::lib_refactored::settings::*;
 use crate::lib_refactored::models::*;
-use crate::lib_refactored::sd_scripts::*;
 use crate::lib_refactored::gpu::*;
 use crate::lib_refactored::python_utils::*;
 

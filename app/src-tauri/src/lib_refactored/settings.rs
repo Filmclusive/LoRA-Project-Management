@@ -1,10 +1,8 @@
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::fs;
-use tauri::Manager;
 use crate::lib_refactored::types::*;
 use crate::lib_refactored::paths::*;
 use crate::lib_refactored::models::*;
-use crate::lib_refactored::gpu::*;
 use crate::lib_refactored::python_utils::*;
 
 pub fn load_settings(root: &Path) -> Result<AppSettings, String> {

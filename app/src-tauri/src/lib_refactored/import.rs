@@ -162,7 +162,7 @@ pub fn import_images_with_mode(
 
         let images_dir = PathBuf::from(&char_paths.images_dir);
         let originals_dir = PathBuf::from(&char_paths.originals_dir);
-        let thumbs_dir = PathBuf::from(&char_paths.thumbs_dir);
+        let _thumbs_dir = PathBuf::from(&char_paths.thumbs_dir);
 
         if has_prepared_image_for_stem(&images_dir, stem) {
             skipped_duplicates += 1;
@@ -464,8 +464,8 @@ pub fn run_sips_png(src: &Path, out_png: &Path) -> Result<(), String> {
 }
 
 pub fn has_prepared_image_for_stem(images_dir: &Path, stem: &str) -> bool {
-    let PREPARED_IMAGE_EXTS: [&str; 4] = ["png", "jpg", "jpeg", "webp"];
-    PREPARED_IMAGE_EXTS
+    let prepared_image_exts: [&str; 4] = ["png", "jpg", "jpeg", "webp"];
+    prepared_image_exts
         .iter()
         .any(|ext| images_dir.join(format!("{stem}.{ext}")).exists())
 }
@@ -501,10 +501,6 @@ pub fn import_lora(
         .file_name()
         .and_then(|s| s.to_str())
         .ok_or("Invalid source file name.")?;
-    let stem = src
-        .file_stem()
-        .and_then(|s| s.to_str())
-        .unwrap_or("model");
     let ext = src
         .extension()
         .and_then(|s| s.to_str())

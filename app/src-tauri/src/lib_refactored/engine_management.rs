@@ -4,9 +4,7 @@ use std::process::{Command, Stdio, Output};
 use std::collections::VecDeque;
 use tauri::Manager;
 use crate::lib_refactored::types::*;
-use crate::lib_refactored::paths::*;
 use crate::lib_refactored::utils::*;
-use crate::lib_refactored::settings::*;
 
 pub fn looks_like_repo_root(dir: &Path) -> bool {
     dir.join("presets").is_dir() && dir.join("runner").is_dir()

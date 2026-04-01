@@ -1,6 +1,5 @@
 use std::process::{Command, Stdio};
 use crate::lib_refactored::types::*;
-use crate::lib_refactored::settings::*;
 
 pub fn version_at_least(version: &str, major: u32, minor: u32) -> bool {
     let mut it = version.split('.');
