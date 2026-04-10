@@ -349,3 +349,9 @@ Ensure Filmclusive wrapper licensing does not conflict with upstream dependencie
 Troubleshooting (Windows downloads)
 
 If a managed download fails with a message like `Windows certificate revocation check failed (SChannel)`, set the environment variable `FILMCLUSIVE_CURL_SSL_NO_REVOKE=1` and retry. This makes the app pass `curl --ssl-no-revoke` for downloads on Windows.
+
+⸻
+
+## Distribution & releases
+
+Packaging, release automation, and instructions for splitting `/apps/train` into its own repository live in `DISTRIBUTING.md`. Follow that guide to keep installers out of Git, publish `.dmg`/`.app` assets via GitHub Releases, and share the app from `Filmclusive/LoRA-Project-Management` or a similar repo.
