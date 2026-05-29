@@ -19,6 +19,23 @@ Although the primary use case is **Character Capture**, the same workflow suppor
 - **Lighting styles** (cinematic lighting looks, practicals, contrast ratios)
 - **Era / art direction styles** (period texture, palette, design language)
 
+
+<img width="1327" height="1039" alt="Screenshot 2026-05-29 at 10 08 03 AM" src="https://github.com/user-attachments/assets/c3746d2c-92b0-4860-be98-a3463f44825e" />
+
+<img width="1321" height="1034" alt="Screenshot 2026-05-29 at 10 08 48 AM" src="https://github.com/user-attachments/assets/ee7e25fd-3b6d-4107-91d7-8e499cd908a1" />
+
+<img width="587" height="692" alt="Screenshot 2026-05-29 at 10 10 15 AM" src="https://github.com/user-attachments/assets/97a65d69-36a4-4212-abb6-dad17be06b68" />
+
+<img width="580" height="559" alt="Screenshot 2026-05-29 at 10 10 48 AM" src="https://github.com/user-attachments/assets/64a3dffd-fb2f-422c-a237-c87ab67bd8f4" />
+
+<img width="1330" height="1032" alt="Screenshot 2026-05-29 at 10 11 35 AM" src="https://github.com/user-attachments/assets/90b86595-62e5-4daf-89aa-8ccb71f32b7e" />
+
+<img width="1323" height="1038" alt="Screenshot 2026-05-29 at 10 11 51 AM" src="https://github.com/user-attachments/assets/cea269b4-ef67-4f8e-ad34-16d7fe54735e" />
+
+<img width="617" height="326" alt="Screenshot 2026-05-29 at 10 14 04 AM" src="https://github.com/user-attachments/assets/369949da-77a2-46c7-b712-c6de2fcef13e" />
+
+
+
 ## Philosophy
 
 This is not a research lab. It is a creative appliance.
