@@ -151,7 +151,7 @@ function engineForAsset(args: { asset: AssetSummary | null; training: TrainingCo
   });
 }
 
-export function TrainingPage(_props: { onOpenSettings: () => void }) {
+export function TrainingPage(props: { onOpenSettings: () => void; isSetupPreview: boolean }) {
   const { selectedProjectId } = useProjectContext();
   const { settings, engineReport, runEngineCheck, selectedPresetId, selectedPreset, preferredFluxStatus } = useSettingsContext();
   const { preferences, updatePreferences } = useUserPreferences();
@@ -398,7 +398,8 @@ export function TrainingPage(_props: { onOpenSettings: () => void }) {
   const engineConfigured = Boolean(systemBaseModelPath) && (!managedFluxRequired || Boolean(preferredFluxStatus?.ready));
   const engineReady = engineConfigured && Boolean(engineReport?.ok);
   const captionsReady = Boolean(captionStatus?.ok);
-  const canTrain = Boolean(selectedAsset && selectedPresetId && captionsReady && engineReady && ui.kind !== "working");
+  const canPrepareRun = Boolean(selectedAsset && selectedPresetId && captionStatus?.ok && ui.kind !== "working" && !props.isSetupPreview);
+  const canTrain = Boolean(selectedAsset && selectedPresetId && captionsReady && engineReady && ui.kind !== "working" && !props.isSetupPreview);
 
   const userStepsOverride =
     selectedAsset && selectedAsset.training_steps_override && selectedAsset.training_steps_override > 0 ? selectedAsset.training_steps_override : null;
@@ -432,6 +433,7 @@ export function TrainingPage(_props: { onOpenSettings: () => void }) {
     if (!selectedAsset) return "Select or create an asset to continue.";
     if (!selectedPresetId) return "Choose a preset in Prep or Assets to continue.";
     if (!captionsReady) return "Complete descriptions in Prep before creating.";
+    if (props.isSetupPreview) return "Preview only until system setup is complete.";
     if (!engineReady) return "Follow the setup checklist above to continue.";
     if (!runDir) return "Prepare a run to lock in settings.";
     if (runNeedsRebuild) return "Settings changed since this run was prepared. Rebuild the run before training.";
@@ -439,7 +441,7 @@ export function TrainingPage(_props: { onOpenSettings: () => void }) {
     if (trainingProgress.phase === "completed") return "Training finished. Your LoRA artifacts are ready.";
     if (trainingProgress.phase === "failed") return "Training failed. Check run details for the last log lines.";
     return "Ready to train.";
-  }, [captionsReady, engineReady, isTrainingRunActive, runDir, runNeedsRebuild, selectedAsset, selectedPresetId, trainingProgress.phase]);
+  }, [captionsReady, engineReady, isTrainingRunActive, props.isSetupPreview, runDir, runNeedsRebuild, selectedAsset, selectedPresetId, trainingProgress.phase]);
 
   async function createTrainingAsset() {
     if (!selectedProjectId) return;
@@ -469,6 +471,10 @@ export function TrainingPage(_props: { onOpenSettings: () => void }) {
   }
 
   async function prepareRun() {
+    if (props.isSetupPreview) {
+      setUi({ kind: "error", message: "Preview mode keeps run preparation disabled until system setup is complete." });
+      return;
+    }
     if (!selectedProjectId || !selectedAsset || !selectedPresetId || !assetPaths) return;
     if (!captionStatus?.ok) {
       setUi({ kind: "error", message: "Descriptions are not ready yet. Complete the asset Prep before training." });
@@ -555,6 +561,10 @@ export function TrainingPage(_props: { onOpenSettings: () => void }) {
   }
 
   async function doTrain() {
+    if (props.isSetupPreview) {
+      setUi({ kind: "error", message: "Preview mode keeps training disabled until system setup is complete." });
+      return;
+    }
     if (!selectedAsset || !runDir) return;
     if (runNeedsRebuild) {
       setUi({ kind: "error", message: "Training settings changed since the run was prepared. Create or rebuild the run before training." });
@@ -738,6 +748,19 @@ export function TrainingPage(_props: { onOpenSettings: () => void }) {
 
         {/* Engine setup guidance already appears at the top-level app banner; avoid duplicating it here. */}
 
+        {props.isSetupPreview ? (
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--fc-border)] bg-[var(--fc-surface)] p-3 text-sm text-[var(--fc-text-muted)]">
+            <span>Preview mode shows the real asset and preset state, but run prep and training stay off until setup is complete.</span>
+            <button
+              type="button"
+              className="rounded-xl border border-[var(--fc-border)] bg-[var(--fc-panel)] px-3 py-2 text-sm font-semibold text-[var(--fc-text)] hover:bg-[var(--fc-surface-hover)]"
+              onClick={props.onOpenSettings}
+            >
+              Open Setup
+            </button>
+          </div>
+        ) : null}
+
         {ui.kind === "error" ? (
           <div className="mt-4 rounded-xl border border-[var(--fc-border)] bg-[var(--fc-surface)] p-3 text-sm text-[var(--fc-danger)]">{ui.message}</div>
         ) : null}
@@ -746,10 +769,10 @@ export function TrainingPage(_props: { onOpenSettings: () => void }) {
           <button
             type="button"
             className="rounded-xl border border-[var(--fc-border)] bg-[var(--fc-surface)] px-3 py-2 text-sm font-semibold text-[var(--fc-text)] hover:bg-[var(--fc-surface-hover)] disabled:opacity-60"
-            disabled={!selectedAsset || !selectedPresetId || !captionStatus?.ok || ui.kind === "working"}
+            disabled={!canPrepareRun}
             onClick={() => void prepareRun()}
           >
-            {runDir ? "Rebuild Run" : "Prepare Run"}
+            {props.isSetupPreview ? "Prepare Run" : runDir ? "Rebuild Run" : "Prepare Run"}
           </button>
           <div className="flex gap-2">
             <button
@@ -758,7 +781,7 @@ export function TrainingPage(_props: { onOpenSettings: () => void }) {
               disabled={!canTrain || !runDir || runNeedsRebuild}
               onClick={() => void doTrain()}
             >
-              {trainingActionLabel}
+              {props.isSetupPreview ? "Train" : trainingActionLabel}
             </button>
             {isTrainingRunActive ? (
               <button

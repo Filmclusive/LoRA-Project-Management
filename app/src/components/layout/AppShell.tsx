@@ -10,6 +10,7 @@ export function AppShell(props: {
   onSectionChange: (next: StudioSection) => void;
   setupLocked: boolean;
   setupBypass: boolean;
+  isSetupPreview: boolean;
   breadcrumb: BreadcrumbItem[];
   headerRight?: ReactNode;
   children: ReactNode;
@@ -67,21 +68,21 @@ export function AppShell(props: {
         </header>
         <main className="min-h-0 min-w-0 flex-1 overflow-hidden">
           <div className="h-full min-h-0 overflow-auto px-4 py-3 sm:px-5 sm:py-4">
-	            {props.setupLocked && props.setupBypass && props.section !== "settings" ? (
-	              <div className="mb-4 rounded-2xl border border-[var(--fc-warning-border)] bg-[var(--fc-warning-surface)] p-4 text-sm text-[var(--fc-text)]">
-	                <div className="flex flex-wrap items-center justify-between gap-3">
-	                  <div className="min-w-0">
-	                    <div className="font-semibold">Setup incomplete</div>
-	                    <div className="mt-1 text-sm text-[var(--fc-text-muted)]">
-	                      Finish system setup before continuing.
-	                    </div>
-	                  </div>
-	                  <button
-	                    type="button"
-	                    className="shrink-0 rounded-xl bg-[var(--fc-accent)] px-3 py-2 text-sm font-semibold text-[var(--fc-accent-text)] hover:opacity-95"
+            {props.isSetupPreview && props.section !== "settings" ? (
+              <div className="mb-4 rounded-2xl border border-[var(--fc-warning-border)] bg-[var(--fc-warning-surface)] p-4 text-sm text-[var(--fc-text)]">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="font-semibold">Preview mode</div>
+                    <div className="mt-1 text-sm text-[var(--fc-text-muted)]">
+                      Browse real project data and capture screenshots while setup is still incomplete.
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="shrink-0 rounded-xl bg-[var(--fc-accent)] px-3 py-2 text-sm font-semibold text-[var(--fc-accent-text)] hover:opacity-95"
                     onClick={() => updatePreferences({ activeSection: "settings", settingsTab: "system" })}
                   >
-                    Return to Setup
+                    Open Setup
                   </button>
                 </div>
               </div>

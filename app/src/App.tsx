@@ -24,6 +24,7 @@ function StudioApp() {
 
   const setupLocked = !setupStatus?.ok;
   const setupBypass = preferences.setupBypass;
+  const isSetupPreview = setupLocked && setupBypass;
 
   useEffect(() => {
     if (!setupLocked || setupBypass) return;
@@ -66,6 +67,7 @@ const sectionLabel: Record<StudioSection, string> = {
       section={section}
       setupLocked={setupLocked}
       setupBypass={setupBypass}
+      isSetupPreview={isSetupPreview}
       onSectionChange={(next) => {
         if (setupLocked && !setupBypass && next !== "settings") {
           updatePreferences({ activeSection: "settings", settingsTab: "system" });
@@ -81,9 +83,10 @@ const sectionLabel: Record<StudioSection, string> = {
           <ProjectsPage onOpenCharacters={() => updatePreferences({ activeSection: "assets" })} />
         ) : null}
         {section === "assets" ? <LibraryPage /> : null}
-        {section === "prep" ? <BuildPage /> : null}
+        {section === "prep" ? <BuildPage isSetupPreview={isSetupPreview} /> : null}
         {section === "create" ? (
           <TrainingPage
+            isSetupPreview={isSetupPreview}
             onOpenSettings={() => updatePreferences({ activeSection: "settings", settingsTab: "system" })}
           />
         ) : null}

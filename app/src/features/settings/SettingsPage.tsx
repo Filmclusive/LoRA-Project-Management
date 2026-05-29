@@ -180,8 +180,8 @@ export function SettingsPage() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm text-[var(--fc-text-muted)]">
               {setupBypass
-                ? "Backdoor enabled to explore Prep and Create while setup is still in progress."
-                : "Setup mode keeps the studio inside this page until the system check passes."
+                ? "Preview mode is on. Prep and Create stay visible for screenshots while setup is still incomplete."
+                : "Setup mode keeps the studio here until the system check passes. Turn on preview mode if you need screenshots first."
               }
             </p>
             <button
@@ -190,7 +190,7 @@ export function SettingsPage() {
               aria-pressed={setupBypass}
               className="rounded-xl border border-[var(--fc-border)] bg-[var(--fc-panel)] px-3 py-2 text-sm font-semibold text-[var(--fc-text)] transition hover:bg-[var(--fc-surface-hover)]"
             >
-              {setupBypass ? "Hide Prep & Create sections" : "Show Prep & Create sections"}
+              {setupBypass ? "Turn off preview mode" : "Turn on preview mode"}
             </button>
           </div>
         </div>

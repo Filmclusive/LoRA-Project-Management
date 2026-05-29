@@ -18,6 +18,7 @@ interface AssetWorkspaceProps {
   deleteAssetStatus: { kind: string; message?: string };
   workspaceTab: WorkspaceTab;
   setWorkspaceTab: (tab: WorkspaceTab) => void;
+  visibleTabs?: WorkspaceTab[];
   // Tab Props
   handleImportImages: (mode: "copy" | "link") => void;
   handleImportFolder: (mode: "copy" | "link") => void;
@@ -75,6 +76,7 @@ export function AssetWorkspace({
   handleExportModel,
   requestModelDelete,
   setStatus,
+  visibleTabs,
 }: AssetWorkspaceProps) {
   if (!selectedAsset) {
     return (
@@ -92,6 +94,7 @@ export function AssetWorkspace({
     models: "LoRAs",
     usage: "Usage",
   };
+  const tabs = visibleTabs ?? ["data", "captions", "models", "usage"];
 
   return (
     <section className="col-span-12 min-h-0 rounded-2xl border border-[var(--fc-border)] bg-[var(--fc-panel)] p-4 lg:col-span-7">
@@ -124,7 +127,7 @@ export function AssetWorkspace({
         </div>
 
         <div className="mt-3 flex flex-wrap gap-1 border-b border-[var(--fc-border)] pb-3">
-          {(["data", "captions", "models", "usage"] as WorkspaceTab[]).map((tabId) => (
+          {tabs.map((tabId) => (
             <button
               key={tabId}
               type="button"

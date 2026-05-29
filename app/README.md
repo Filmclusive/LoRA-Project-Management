@@ -1,6 +1,20 @@
-# Tauri + React + Typescript
+# LoRA Trainer (Desktop)
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+Tauri desktop app (React + Vite).
+
+## Dev
+
+- `pnpm dev` (web dev server)
+- `pnpm tauri dev` (desktop)
+
+## Build
+
+- `pnpm tauri build`
+- macOS DMG only: `pnpm tauri:build:dmg`
+
+## Icon
+
+App bundle icons live in `src-tauri/icons/` (Filmclusive logo set).
 
 ## Recommended IDE Setup
 
